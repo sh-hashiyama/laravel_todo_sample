@@ -1,5 +1,8 @@
 <?php
 
+use App\Task;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,16 +14,24 @@
 |
 */
 
-// 表示処理の作成
-Route::get('/', function () {
-    return view('task');
-});
+// 表示処理
+Route::get('/', 'TasksController@index');
 
-Route::post('/tasks', function (Request $request) {
-    //
-});
+// 登録処理
+Route::post('/tasks', 'TasksController@store');
 
-// 削除処理の作成
-Route::post('/task/{task}', function (Task $task) {
-    //
-});
+// 削除処理
+Route::post('/task/{task}', 'TasksController@destroy');
+
+//更新画面
+Route::post('/tasksedit/{task}', 'TasksController@edit');
+
+//更新処理
+Route::post('/tasks/update', 'TasksController@update');
+
+//apiページ表示処理
+Route::get('/api_ajax', 'TasksController@api_ajax');
+
+Auth::routes();
+
+Route::get('/home', 'TasksController@index')->name('home');
